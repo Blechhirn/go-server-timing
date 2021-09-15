@@ -94,14 +94,5 @@ func writeHeader(headers http.Header, h *Header, opts *MiddlewareOpts) {
 		return
 	}
 
-	// Merge any existing header
-	header, err := ParseHeader(headers.Get(HeaderKey))
-	if err == nil {
-		for _, m := range header.Metrics {
-			// We have the lock so h.Add will deadlock
-			h.Metrics = append(h.Metrics, m)
-		}
-	}
-
 	headers.Set(HeaderKey, h.String())
 }
